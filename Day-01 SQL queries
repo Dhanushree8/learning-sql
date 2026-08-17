@@ -1,3 +1,20 @@
+CREATE DATABASE student;
+Query OK, 1 row affected (0.01 sec)
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+
+mysql> USE college;
+Database changed
+
 CREATE TABLE students(
 id INT,
 name VARCHAR(50),
