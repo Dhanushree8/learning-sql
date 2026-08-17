@@ -1,15 +1,169 @@
-CREATE DATABASE college;
-
-USE college;
-
-CREATE TABLE students (
-    id INT PRIMARY KEY,
-    name VARCHAR(50),
-    age INT
+CREATE TABLE students(
+id INT,
+name VARCHAR(50),
+branch VARCHAR(20),
+marks INT
 );
 
-INSERT INTO students VALUES
-(1, 'Rahul', 21),
-(2, 'Priya', 22);
 
-SELECT * FROM students;
+CREATE TABLE student (
+    SID INT PRIMARY KEY,
+    SNAME VARCHAR(50) NOT NULL,
+    USN VARCHAR(10) NOT NULL UNIQUE,
+    MARKS DECIMAL(5,2),
+    DOB DATE NOT NULL,
+    PHONE BIGINT UNIQUE,
+    GENDER VARCHAR(10),
+    CONSTRAINT chk_marks CHECK (MARKS BETWEEN 0 AND 100), 
+    CONSTRAINT chk_gender CHECK (GENDER IN ('Male', 'Female', 'Other'))
+);
+
+INSERT INTO student VALUES(1, 'RAHUL', '1MS23CS101', 85.50, '2005-04-12', 9876543210, 'MALE');
+INSERT INTO student VALUES(2, 'PRIYA', '1JS23AI102', 77.77, '2004-05-21', 9234567890, 'FEMALE');
+INSERT INTO student VALUES(3, 'TANISHKA', '1MY24ME104', 92.22, '2003-10-10', 8432167890, 'FEMALE');
+
+mysql> CREATE DATABASE college;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> USE college;
+Database changed
+mysql> CREATE TABLE students (
+    -> id INT,
+    -> name VARCHAR(50),
+    -> branch VARCHAR(20),
+    -> marks INT
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO students VALUES (1, 'Dhanu', 'CSE', 85);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO students VALUES (1, 'Priya', 'AI', 86);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM students;
++------+-------+--------+-------+
+| id   | name  | branch | marks |
++------+-------+--------+-------+
+|    1 | Dhanu | CSE    |    85 |
+|    1 | Priya | AI     |    86 |
++------+-------+--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE student(
+    -> SID INT,
+    -> SNAME VARCHAR(50),
+    -> USN VARCHAR(10),
+    -> MARKS DECIMAL(5,2),
+    -> DOB DATE,
+    -> PHONE BIGINT,
+    -> GENDER CHAR(10)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC STUDENT;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| SID    | int          | YES  |     | NULL    |       |
+| SNAME  | varchar(50)  | YES  |     | NULL    |       |
+| USN    | varchar(10)  | YES  |     | NULL    |       |
+| MARKS  | decimal(5,2) | YES  |     | NULL    |       |
+| DOB    | date         | YES  |     | NULL    |       |
+| PHONE  | bigint       | YES  |     | NULL    |       |
+| GENDER | char(10)     | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> CREATE TABLE student(
+    -> SID INT PRIMARY KEY,
+    -> SNAME VARCHAR(50) NOT NULL
+    -> USN VARCHAR(10) NOT NULL UNIQUE,
+    -> MARKS DECIMAL(5,2) NOT NULL
+    -> DOB DATE NOT NULL,
+    -> PHONE BIGINT UNIQUE,
+    -> GENDER CHAR(10) CHECK (GENDER IN ('MALE', 'FEMALE' 'OTHER')
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'USN VARCHAR(10) NOT NULL UNIQUE,
+MARKS DECIMAL(5,2) NOT NULL
+DOB DATE NOT NULL,' at line 4
+mysql> DESC student
+    -> DESC student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC student' at line 2
+mysql> DESC student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| SID    | int          | YES  |     | NULL    |       |
+| SNAME  | varchar(50)  | YES  |     | NULL    |       |
+| USN    | varchar(10)  | YES  |     | NULL    |       |
+| MARKS  | decimal(5,2) | YES  |     | NULL    |       |
+| DOB    | date         | YES  |     | NULL    |       |
+| PHONE  | bigint       | YES  |     | NULL    |       |
+| GENDER | char(10)     | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> DROP TABLE student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE student (
+    ->     SID INT PRIMARY KEY,
+    ->     SNAME VARCHAR(50) NOT NULL,
+    ->     USN VARCHAR(10) NOT NULL UNIQUE,
+    ->     MARKS DECIMAL(5,2),
+    ->     DOB DATE NOT NULL,
+    ->     PHONE BIGINT UNIQUE,
+    ->     GENDER VARCHAR(10),
+    ->     CONSTRAINT chk_marks CHECK (MARKS BETWEEN 0 AND 100),
+    ->     CONSTRAINT chk_gender CHECK (GENDER IN ('Male', 'Female', 'Other'))
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| SID    | int          | NO   | PRI | NULL    |       |
+| SNAME  | varchar(50)  | NO   |     | NULL    |       |
+| USN    | varchar(10)  | NO   | UNI | NULL    |       |
+| MARKS  | decimal(5,2) | YES  |     | NULL    |       |
+| DOB    | date         | NO   |     | NULL    |       |
+| PHONE  | bigint       | YES  | UNI | NULL    |       |
+| GENDER | varchar(10)  | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+
+
+mysql> INSERT INTO student VALUES(1, 'RAHUL', '1MS23CS101', 85.50, '2005-04-12', 9876543210, 'MALE');
+Query OK, 1 row affected (0.01 sec)
+
+
+mysql> INSERT INTO student VALUES(2, 'PRIYA', '1JS23AI102', 77.77, '2004-05-21', 9234567890, 'FEMALE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO student VALUES(3, 'TANISHKA', '1MY24ME104', 92.22, '2003-10-10', 8432167890, 'FEMALE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM student;
++-----+----------+------------+-------+------------+------------+--------+
+| SID | SNAME    | USN        | MARKS | DOB        | PHONE      | GENDER |
++-----+----------+------------+-------+------------+------------+--------+
+|   1 | RAHUL    | 1MS23CS101 | 85.50 | 2005-04-12 | 9876543210 | MALE   |
+|   2 | PRIYA    | 1JS23AI102 | 77.77 | 2004-05-21 | 9234567890 | FEMALE |
+|   3 | TANISHKA | 1MY24ME104 | 92.22 | 2003-10-10 | 8432167890 | FEMALE |
++-----+----------+------------+-------+------------+------------+--------+
+3 rows in set (0.00 sec)
