@@ -1,0 +1,126 @@
+mysql> CREATE TABLE ORDERS(
+    -> OID INT PRIMARY KEY,
+    -> O_TIME TIME,
+    -> O_DATE DATE,
+    -> CID INT NOT NULL,
+    -> PID INT NOT NULL,
+    -> FOREIGN KEY (CID) REFERENCES CUSTOMERS(CID),
+    -> FOREIGN KEY (PID) REFERENCES PRODUCT(PID));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DESC CUSTOMERS;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| CID   | int         | NO   | PRI | NULL    |       |
+| CNAME | varchar(30) | NO   |     | NULL    |       |
+| EMAIL | varchar(20) | NO   |     | NULL    |       |
+| PHONE | bigint      | NO   | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> DESC PRODUCT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PID      | int         | NO   | PRI | NULL    |       |
+| PNAME    | varchar(30) | NO   | UNI | NULL    |       |
+| QUANTITY | int         | NO   |     | NULL    |       |
+| PRICE    | int         | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESC ORDERS;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| OID    | int  | NO   | PRI | NULL    |       |
+| O_TIME | time | YES  |     | NULL    |       |
+| O_DATE | date | YES  |     | NULL    |       |
+| CID    | int  | NO   | MUL | NULL    |       |
+| PID    | int  | NO   | MUL | NULL    |       |
++--------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO CUSTOMERS VALUES (1,"DHANU","D@GMAIL.COM",9876543210),(2,"ANU","A@GMAIL.COM",8796543210),(3,"GANESH","GGMAIL.COM",9875643210),(4,"DHANU","R@GMAIL.COM",9876542310);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CUSTOMERS;
++-----+--------+-------------+------------+
+| CID | CNAME  | EMAIL       | PHONE      |
++-----+--------+-------------+------------+
+|   1 | DHANU  | D@GMAIL.COM | 9876543210 |
+|   2 | ANU    | A@GMAIL.COM | 8796543210 |
+|   3 | GANESH | GGMAIL.COM  | 9875643210 |
+|   4 | DHANU  | R@GMAIL.COM | 9876542310 |
++-----+--------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> INSERT INTO PRODUCT VALUES(101,"LAPTOP",6,40000),(102,"MOBILE",4,30000),(103,"HEADPHONES",2,2000),(104,"MARKER",7,200);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PRODUCT;
++-----+------------+----------+-------+
+| PID | PNAME      | QUANTITY | PRICE |
++-----+------------+----------+-------+
+| 101 | LAPTOP     |        6 | 40000 |
+| 102 | MOBILE     |        4 | 30000 |
+| 103 | HEADPHONES |        2 |  2000 |
+| 104 | MARKER     |        7 |   200 |
++-----+------------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO ORDERS(OID,CID,PID) VALUES(201,1,101),(202,1,101),(203,2,102);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO ORDERS(OID,CID,PID) VALUES(204,3,102);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from orders;
++-----+--------+--------+-----+-----+
+| OID | O_TIME | O_DATE | CID | PID |
++-----+--------+--------+-----+-----+
+| 201 | NULL   | NULL   |   1 | 101 |
+| 202 | NULL   | NULL   |   1 | 101 |
+| 203 | NULL   | NULL   |   2 | 102 |
+| 204 | NULL   | NULL   |   3 | 102 |
++-----+--------+--------+-----+-----+
+4 rows in set (0.00 sec)
+
+mysql> DELETE FROM ORDERS;
+Query OK, 4 rows affected (0.01 sec)
+
+mysql> SELECT * FROM ORDERS;
+Empty set (0.00 sec)
+
+mysql> DESC ORDERS;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| OID    | int  | NO   | PRI | NULL    |       |
+| O_TIME | time | YES  |     | NULL    |       |
+| O_DATE | date | YES  |     | NULL    |       |
+| CID    | int  | NO   | MUL | NULL    |       |
+| PID    | int  | NO   | MUL | NULL    |       |
++--------+------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO ORDERS VALUES(201,'01:02:12','26/08/04',1,101),(202,'02:02:12','26/08/05',2,101),(203,'03:02:12','26/08/06',2,102),(204,'04:02:12','26/08/07',4,101);
+Query OK, 4 rows affected, 4 warnings (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 4
+
+mysql> SELECT * FROM ORDERS;
++-----+----------+------------+-----+-----+
+| OID | O_TIME   | O_DATE     | CID | PID |
++-----+----------+------------+-----+-----+
+| 201 | 01:02:12 | 2026-08-04 |   1 | 101 |
+| 202 | 02:02:12 | 2026-08-05 |   2 | 101 |
+| 203 | 03:02:12 | 2026-08-06 |   2 | 102 |
+| 204 | 04:02:12 | 2026-08-07 |   4 | 101 |
++-----+----------+------------+-----+-----+
+4 rows in set (0.00 sec)
