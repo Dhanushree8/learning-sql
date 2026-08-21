@@ -1,0 +1,359 @@
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| dcl                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> USE DCL;
+Database changed
+mysql> CREATE TABLE DEPT(
+    -> DID INT AUTO_INCREMENT PRIMARY KEY,
+    -> DNAME VARCHAR(30) UNIQUE NOT NULL,
+    -> DEMAIL VARCHAR(50) UNIQUE,
+    -> DPHONE BIGINT UNIQUE NOT NULL CHECK(LENGTH(DPHONE)=10),
+    -> DHOD VARCHAR(30) ,
+    -> PRINCIPAL VARCHAR(20) DEFAULT "SHIVUKUMAR");
+
+mysql> DESC DEPT;
++-----------+-------------+------+-----+------------+----------------+
+| Field     | Type        | Null | Key | Default    | Extra          |
++-----------+-------------+------+-----+------------+----------------+
+| DID       | int         | NO   | PRI | NULL       | auto_increment |
+| DNAME     | varchar(30) | NO   | UNI | NULL       |                |
+| DEMAIL    | varchar(50) | YES  | UNI | NULL       |                |
+| DPHONE    | bigint      | NO   | UNI | NULL       |                |
+| DHOD      | varchar(30) | YES  |     | NULL       |                |
+| PRINCIPAL | varchar(20) | YES  |     | SHIVUKUMAR |                |
++-----------+-------------+------+-----+------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE TABLE STUDENTS(
+    -> SID INT PRIMARY KEY,
+    -> SNAME VARCHAR(50) NOT NULL,
+    -> SEMAIL VARCHAR(30) UNIQUE,
+    -> SPHONE BIGINT NOT NULL CHECK(LENGTH(SPHONE)=10),
+    -> SADDRESS VARCHAR(20) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC STUDENTS;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SID      | int         | NO   | PRI | NULL    |       |
+| SNAME    | varchar(50) | NO   |     | NULL    |       |
+| SEMAIL   | varchar(30) | YES  | UNI | NULL    |       |
+| SPHONE   | bigint      | NO   |     | NULL    |       |
+| SADDRESS | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENTS
+    -> ADD SCOLLEGE VARCHAR(20) NOT NULL;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENTS;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SID      | int         | NO   | PRI | NULL    |       |
+| SNAME    | varchar(50) | NO   |     | NULL    |       |
+| SEMAIL   | varchar(30) | YES  | UNI | NULL    |       |
+| SPHONE   | bigint      | NO   |     | NULL    |       |
+| SADDRESS | varchar(20) | NO   |     | NULL    |       |
+| SCOLLEGE | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENTS
+    -> ADD SUSN VARCHAR(10) UNIQUE NOT NULL FIRST;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENTS;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SUSN     | varchar(10) | NO   | UNI | NULL    |       |
+| SID      | int         | NO   | PRI | NULL    |       |
+| SNAME    | varchar(50) | NO   |     | NULL    |       |
+| SEMAIL   | varchar(30) | YES  | UNI | NULL    |       |
+| SPHONE   | bigint      | NO   |     | NULL    |       |
+| SADDRESS | varchar(20) | NO   |     | NULL    |       |
+| SCOLLEGE | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENTS
+    -> ADD SSCORE DECIMAL(5,2) NOT NULL AFTER SUSN;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENTS;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| SUSN     | varchar(10)  | NO   | UNI | NULL    |       |
+| SSCORE   | decimal(5,2) | NO   |     | NULL    |       |
+| SID      | int          | NO   | PRI | NULL    |       |
+| SNAME    | varchar(50)  | NO   |     | NULL    |       |
+| SEMAIL   | varchar(30)  | YES  | UNI | NULL    |       |
+| SPHONE   | bigint       | NO   |     | NULL    |       |
+| SADDRESS | varchar(20)  | NO   |     | NULL    |       |
+| SCOLLEGE | varchar(20)  | NO   |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE COMPANY;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SHOW COMPANY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COMPANY' at line 1
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| company            |
+| dcl                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> USE COMPANY;
+Database changed
+mysql>
+mysql> CREATE TABLE DEPAT(
+    -> DEPAT_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> DEPAT_CODE CHAR(5) NOT NULL UNIQUE,
+    -> DEPAT_NAME VARCHAR(50) DEFAULT 'BANGALORE',
+    -> BUDGET DECIMAL(12,2) DEFAULT 15000.00 CHECK(BUDGET >=0)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESC DEPAT;
++------------+---------------+------+-----+-----------+----------------+
+| Field      | Type          | Null | Key | Default   | Extra          |
++------------+---------------+------+-----+-----------+----------------+
+| DEPAT_ID   | int           | NO   | PRI | NULL      | auto_increment |
+| DEPAT_CODE | char(5)       | NO   | UNI | NULL      |                |
+| DEPAT_NAME | varchar(50)   | YES  |     | BANGALORE |                |
+| BUDGET     | decimal(12,2) | YES  |     | 15000.00  |                |
++------------+---------------+------+-----+-----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEE (
+    -> EMP_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> EMP_CODE CHAR(6) NOT NULL UNIQUE,
+    -> EMP_NAME VARCHAR(100) UNIQUE,
+    -> PHONE BIGINT UNIQUE,
+    -> SALARY DECIMAL(10,2) NOT NULL CHECK(SALARY >= 10000),
+    -> GENDER ENUM('MALE', 'FEMALE', 'OTHER'),
+    -> DOB DATE
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC EMPLOYEE;
++----------+-------------------------------+------+-----+---------+----------------+
+| Field    | Type                          | Null | Key | Default | Extra          |
++----------+-------------------------------+------+-----+---------+----------------+
+| EMP_ID   | int                           | NO   | PRI | NULL    | auto_increment |
+| EMP_CODE | char(6)                       | NO   | UNI | NULL    |                |
+| EMP_NAME | varchar(100)                  | YES  | UNI | NULL    |                |
+| PHONE    | bigint                        | YES  | UNI | NULL    |                |
+| SALARY   | decimal(10,2)                 | NO   |     | NULL    |                |
+| GENDER   | enum('MALE','FEMALE','OTHER') | YES  |     | NULL    |                |
+| DOB      | date                          | YES  |     | NULL    |                |
++----------+-------------------------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEE (
+    -> EMP_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> EMP_CODE CHAR(6) NOT NULL UNIQUE,
+    -> EMP_NAME VARCHAR(100) UNIQUE,
+    -> PHONE BIGINT UNIQUE,
+    -> SALARY DECIMAL(10,2) NOT NULL CHECK(SALARY >= 10000),
+    -> GENDER ENUM('MALE', 'FEMALE', 'OTHER'),
+    -> DOB DATE,
+    -> DEPAT_ID INT NOT NULL,
+    -> FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID)
+    -> );
+ERROR 1050 (42S01): Table 'employee' already exists
+mysql> DESC EMPLOYEE;
++----------+-------------------------------+------+-----+---------+----------------+
+| Field    | Type                          | Null | Key | Default | Extra          |
++----------+-------------------------------+------+-----+---------+----------------+
+| EMP_ID   | int                           | NO   | PRI | NULL    | auto_increment |
+| EMP_CODE | char(6)                       | NO   | UNI | NULL    |                |
+| EMP_NAME | varchar(100)                  | YES  | UNI | NULL    |                |
+| PHONE    | bigint                        | YES  | UNI | NULL    |                |
+| SALARY   | decimal(10,2)                 | NO   |     | NULL    |                |
+| GENDER   | enum('MALE','FEMALE','OTHER') | YES  |     | NULL    |                |
+| DOB      | date                          | YES  |     | NULL    |                |
++----------+-------------------------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEE (
+    -> EMP_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> EMP_CODE CHAR(6) NOT NULL UNIQUE,
+    -> EMP_NAME VARCHAR(100) UNIQUE,
+    -> PHONE BIGINT UNIQUE,
+    -> SALARY DECIMAL(10,2) NOT NULL CHECK(SALARY >= 10000),
+    -> GENDER ENUM('MALE', 'FEMALE', 'OTHER'),
+    -> DOB DATE
+    -> );
+ERROR 1050 (42S01): Table 'employee' already exists
+mysql> DEPAT_ID INT NOT NULL,
+    -> FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID)
+    -> ^C
+mysql> DEPAT_ID INT NOT NULL,
+    -> FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEPAT_ID INT NOT NULL,
+FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID)' at line 1
+mysql> FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID)' at line 1
+mysql> CREATE TABLE EMPLOYEES (
+    -> EMP_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> EMP_CODE CHAR(6) NOT NULL UNIQUE,
+    -> EMP_NAME VARCHAR(100) UNIQUE,
+    -> PHONE BIGINT UNIQUE,
+    -> SALARY DECIMAL(10,2) NOT NULL CHECK(SALARY >= 10000),
+    -> GENDER ENUM('MALE', 'FEMALE', 'OTHER'),
+    -> DOB DATE,
+    -> DEPAT_ID INT NOT NULL,
+    -> FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> DESC EMPLOYEES;
++----------+-------------------------------+------+-----+---------+----------------+
+| Field    | Type                          | Null | Key | Default | Extra          |
++----------+-------------------------------+------+-----+---------+----------------+
+| EMP_ID   | int                           | NO   | PRI | NULL    | auto_increment |
+| EMP_CODE | char(6)                       | NO   | UNI | NULL    |                |
+| EMP_NAME | varchar(100)                  | YES  | UNI | NULL    |                |
+| PHONE    | bigint                        | YES  | UNI | NULL    |                |
+| SALARY   | decimal(10,2)                 | NO   |     | NULL    |                |
+| GENDER   | enum('MALE','FEMALE','OTHER') | YES  |     | NULL    |                |
+| DOB      | date                          | YES  |     | NULL    |                |
+| DEPAT_ID | int                           | NO   | MUL | NULL    |                |
++----------+-------------------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PROJECT(
+    -> PROJECT_ID INT AUTO_INCREMENT,
+    -> PROJECT_CODE CHAR(6) NOT NULL UNIQUE,
+    -> PROJECT_NAME VARCHAR(45) NOT NULL,
+    -> PROJECT_BUDGET DECIMAL(12,2) CHECK(PROJECT_BUDGET >= 0),
+    -> PROJECT_GUIDE VARCHAR(30) DEFAULT "SATHISH",
+    -> START_DATE DATE NOT NULL,
+    -> START_TIME TIME DEFAULT '09:15:00'
+    -> );
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> CREATE TABLE PROJECT(
+    -> PROJECT_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PROJECT_CODE CHAR(6) NOT NULL UNIQUE,
+    -> PROJECT_NAME VARCHAR(45) NOT NULL,
+    -> PROJECT_BUDGET DECIMAL(12,2) CHECK(PROJECT_BUDGET >= 0),
+    -> PROJECT_GUIDE VARCHAR(30) DEFAULT "SATHISH",
+    -> START_DATE DATE NOT NULL,
+    -> START_TIME TIME DEFAULT '09:15:00'
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESC PROJECT
+    -> ^C
+mysql> DESC PROJECT;
++----------------+---------------+------+-----+----------+----------------+
+| Field          | Type          | Null | Key | Default  | Extra          |
++----------------+---------------+------+-----+----------+----------------+
+| PROJECT_ID     | int           | NO   | PRI | NULL     | auto_increment |
+| PROJECT_CODE   | char(6)       | NO   | UNI | NULL     |                |
+| PROJECT_NAME   | varchar(45)   | NO   |     | NULL     |                |
+| PROJECT_BUDGET | decimal(12,2) | YES  |     | NULL     |                |
+| PROJECT_GUIDE  | varchar(30)   | YES  |     | SATHISH  |                |
+| START_DATE     | date          | NO   |     | NULL     |                |
+| START_TIME     | time          | YES  |     | 09:15:00 |                |
++----------------+---------------+------+-----+----------+----------------+
+7 rows in set (0.00 sec)
+
+mysql>
+mysql> CREATE TABLE PROJECTS(
+    -> PROJECT_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PROJECT_CODE CHAR(6) NOT NULL UNIQUE,
+    -> PROJECT_NAME VARCHAR(45) NOT NULL,
+    -> PROJECT_BUDGET DECIMAL(12,2) CHECK(PROJECT_BUDGET >= 0),
+    -> PROJECT_GUIDE VARCHAR(30) DEFAULT "SATHISH",
+    -> START_DATE DATE NOT NULL,
+    -> START_TIME TIME DEFAULT '09:15:00',
+    -> DEPAT_ID INT NOT NULL,
+    -> FOREIGN KEY (DEPAT_ID) REFERENCES DEPAT(DEPAT_ID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> ALTER TABLE DEPAT
+    -> ADD DEPAT_ADRESS VARCHAR(12) NOT NULL;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC DEPAT;
++--------------+---------------+------+-----+-----------+----------------+
+| Field        | Type          | Null | Key | Default   | Extra          |
++--------------+---------------+------+-----+-----------+----------------+
+| DEPAT_ID     | int           | NO   | PRI | NULL      | auto_increment |
+| DEPAT_CODE   | char(5)       | NO   | UNI | NULL      |                |
+| DEPAT_NAME   | varchar(50)   | YES  |     | BANGALORE |                |
+| BUDGET       | decimal(12,2) | YES  |     | 15000.00  |                |
+| DEPAT_ADRESS | varchar(12)   | NO   |     | NULL      |                |
++--------------+---------------+------+-----+-----------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE DEPAT
+    -> ADD DEPAT_ESTYEAR DATE NOT NULL DEFAULT '2005-11-19' FIRST;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC DEPAT;
++---------------+---------------+------+-----+------------+----------------+
+| Field         | Type          | Null | Key | Default    | Extra          |
++---------------+---------------+------+-----+------------+----------------+
+| DEPAT_ESTYEAR | date          | NO   |     | 2005-11-19 |                |
+| DEPAT_ID      | int           | NO   | PRI | NULL       | auto_increment |
+| DEPAT_CODE    | char(5)       | NO   | UNI | NULL       |                |
+| DEPAT_NAME    | varchar(50)   | YES  |     | BANGALORE  |                |
+| BUDGET        | decimal(12,2) | YES  |     | 15000.00   |                |
+| DEPAT_ADRESS  | varchar(12)   | NO   |     | NULL       |                |
++---------------+---------------+------+-----+------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE DEPAT
+    -> ADD DEPAT_HEAD VARCHAR(60) DEFAULT "Shweta" AFTER DEPAT_ID;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC DEPAT;
++---------------+---------------+------+-----+------------+----------------+
+| Field         | Type          | Null | Key | Default    | Extra          |
++---------------+---------------+------+-----+------------+----------------+
+| DEPAT_ESTYEAR | date          | NO   |     | 2005-11-19 |                |
+| DEPAT_ID      | int           | NO   | PRI | NULL       | auto_increment |
+| DEPAT_HEAD    | varchar(60)   | YES  |     | Shweta     |                |
+| DEPAT_CODE    | char(5)       | NO   | UNI | NULL       |                |
+| DEPAT_NAME    | varchar(50)   | YES  |     | BANGALORE  |                |
+| BUDGET        | decimal(12,2) | YES  |     | 15000.00   |                |
+| DEPAT_ADRESS  | varchar(12)   | NO   |     | NULL       |                |
++---------------+---------------+------+-----+------------+----------------+
+7 rows in set (0.00 sec)
